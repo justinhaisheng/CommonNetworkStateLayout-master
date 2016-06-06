@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.demo.haisheng.networkcomponentdemo.MainActivity">
+
+
+    <com.demo.haisheng.networkcomponenntlibrary.NetworkComponent
+        android:id="@+id/network_component"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:state="succeed">
+
+        <!-- add your succeed content-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="数据请求成功"/>
+    </com.demo.haisheng.networkcomponenntlibrary.NetworkComponent>
+
+    <Button
+        android:id="@+id/bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请求网络"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

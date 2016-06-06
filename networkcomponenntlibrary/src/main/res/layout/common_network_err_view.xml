@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/tv_network_err"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:background="@color/white"
+          android:gravity="center"
+          android:lineSpacingMultiplier="1.2"
+          android:text="@string/network_not_connect_please_open"
+          android:textColor="@color/common_black_4d4d4d"
+          android:textSize="23sp"/>

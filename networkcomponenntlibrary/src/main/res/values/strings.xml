@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NetworkComponent</string>
+
+
+    <string name="page_loading">正在打开，请稍候</string>
+    <string name="network_not_connect_please_open">网络请求失败\n请打开无线网络或数据流量</string>
+    <string name="empty_data">无数据</string>
+</resources>

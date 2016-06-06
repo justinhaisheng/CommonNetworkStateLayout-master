@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ViewStub
+        android:id="@+id/vb_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/common_loading_view"
+        />
+
+    <ViewStub
+        android:id="@+id/vb_network_err"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/common_network_err_view"
+        />
+
+
+    <ViewStub
+        android:id="@+id/vb_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/common_empty"
+        />
+
+</FrameLayout>
