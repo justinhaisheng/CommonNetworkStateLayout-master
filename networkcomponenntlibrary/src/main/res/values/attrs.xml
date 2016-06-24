@@ -1,34 +1,35 @@
 ﻿<resources>
 
 
-    <declare-styleable name="netWorkComponentStyleable">
-        <!--4种状态-->
+    <declare-styleable name="CommonNetworkStateLayout">
+        <!--5种状态-->
         <attr format="enum" name="state">
             <enum name="succeed" value="0"/>
             <enum name="loading" value="1"/>
             <enum name="networkErr" value="2"/>
-            <enum name="empty" value="3"/>
+            <enum name="connectErr" value="3"/>
+            <enum name="empty" value="4"/>
         </attr>
-
         <!--更换背景色-->
         <attr name="loadingThemeColor" format="color"></attr>
         <attr name="networkerrThemeColor" format="color"></attr>
+        <attr name="connecterrThemeColor" format="color"></attr>
         <attr name="emptyThemeColor" format="color"></attr>
 
         <!--更换空页面的文本-->
         <attr format="string" name="emptyText"/>
         <!--更换空页面-->
         <attr format="reference" name="emptyLayout"/>
-        <!--更换无网页面的文本-->
+        <!--更换没网页面的文本-->
         <attr format="string" name="networkErrText"/>
-        <!--更换无网页面-->
         <attr format="reference" name="networkErrLayout"/>
 
-        <!--更换正在加载页面文本-->
+        <attr format="string" name="connectErrText"/>
+        <attr format="reference" name="connectErrDrawable"/>
+        <attr format="reference" name="connectErrLayout"/>
+
         <attr format="string" name="loadingText"/>
-        <!--更换正在加载页面-->
         <attr format="reference" name="loadingLayout"/>
-        <!--更换正在加载的progreeBar-->
         <attr name="loadingDrawable" format="reference"/>
 
     </declare-styleable>

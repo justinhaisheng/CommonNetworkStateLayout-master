@@ -21,16 +21,18 @@ import android.widget.TextView;
  * @创建时间 2016/6/2 14:42
  * @描述
  */
-public class NetworkComponent extends FrameLayout {
+public class CommonNetworkStateLayout extends FrameLayout {
 
     private static final String TAG = "CommonNetworkStateView";
 
     private RelativeLayout mLoadingRl;
     private TextView mNetWorkErrTv;
+    private RelativeLayout mConnectErrRl;
     private View mRoot;
 
 
     private int mLoadingThemecolor;
+    private int mConnecterrThemecolor;
     private int mNetworkerrhemecolor;
     private int mNullThemecolor;
 
@@ -39,74 +41,91 @@ public class NetworkComponent extends FrameLayout {
 
     private View mEmptyCustomLayout;
     private View mNetworkErrCustomLayout;
+    private View mConnectErrCustomLayout;
     private View mloadingCustomLayout;
 
     private String mEmptyText;
     private String mNetworkErrText;
+    private String mConnectErrText;
     private String mLoadingText;
     private View mSucceedLayout;
     private int mLoadingDrawableId=-1;
     private ProgressBar mProgressBar;
     private TextView mLoadingTv;
+    private int mConnectErrDrawableId=-1;
     private TextView mEmptyTv;
 
     Context mContext;
-    public NetworkComponent(Context context) {
+    public CommonNetworkStateLayout(Context context) {
         super(context);
         mContext=context;
         initView(context);
     }
 
 
-    public NetworkComponent(Context context, AttributeSet attrs) {
+    public CommonNetworkStateLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext=context;
         TypedArray typedArray = context.obtainStyledAttributes(attrs,
-                R.styleable.netWorkComponentStyleable);
+                R.styleable.CommonNetworkStateLayout);
 
-        //没网络状态页面(用户自己设置的页面)
-        mNetworkErrCustomLayout=hasValueToView(context, typedArray,R.styleable.netWorkComponentStyleable_networkErrLayout);
+        //没网络状态页面(用户自己设置的)
+        mNetworkErrCustomLayout=hasValueToView(context, typedArray,R.styleable.CommonNetworkStateLayout_networkErrLayout);
         Log.i(TAG,"mNetworkErrCustomLayout:"+mNetworkErrCustomLayout);
 
         //正在加载时的页面（用户自己设置的）
-        mloadingCustomLayout=hasValueToView(context,typedArray,R.styleable.netWorkComponentStyleable_loadingLayout);
+        mloadingCustomLayout=hasValueToView(context,typedArray,R.styleable.CommonNetworkStateLayout_loadingLayout);
         Log.i(TAG,"mloadingCustomLayout:"+mloadingCustomLayout);
 
         //空的页面（用户自己设置的）
-        mEmptyCustomLayout=hasValueToView(context,typedArray,R.styleable.netWorkComponentStyleable_emptyLayout);
+        mEmptyCustomLayout=hasValueToView(context,typedArray,R.styleable.CommonNetworkStateLayout_emptyLayout);
         Log.i(TAG,"mEmptyCustomLayout:"+mEmptyCustomLayout);
 
-        //默认为白色（更改页面的背景色）
-        mLoadingThemecolor = typedArray.getColor(R.styleable.netWorkComponentStyleable_loadingThemeColor, -1);
-        mNetworkerrhemecolor = typedArray.getColor(R.styleable.netWorkComponentStyleable_networkerrThemeColor, -1);
-        mNullThemecolor = typedArray.getColor(R.styleable.netWorkComponentStyleable_emptyThemeColor,-1);
-        Log.i(TAG,"mLoadingThemecolor:"+mLoadingThemecolor+"  mNetworkerrhemecolor:"+mNetworkerrhemecolor+"     mNullThemecolor:"+mNullThemecolor);
+        //网络连接失败的页面（用户自己设置的）
+        mConnectErrCustomLayout=hasValueToView(context,typedArray,R.styleable.CommonNetworkStateLayout_connectErrLayout);
+        Log.i(TAG,"mConnectErrCustomLayout:"+mConnectErrCustomLayout);
+
+        //默认为白色
+        mLoadingThemecolor = typedArray.getColor(R.styleable.CommonNetworkStateLayout_loadingThemeColor, -1);
+        mConnecterrThemecolor = typedArray.getColor(R.styleable.CommonNetworkStateLayout_connecterrThemeColor, -1);
+        mNetworkerrhemecolor = typedArray.getColor(R.styleable.CommonNetworkStateLayout_networkerrThemeColor, -1);
+        mNullThemecolor = typedArray.getColor(R.styleable.CommonNetworkStateLayout_emptyThemeColor,-1);
+        Log.i(TAG,"mLoadingThemecolor:"+mLoadingThemecolor+"     mConnecterrThemecolor:"+mConnecterrThemecolor+"     mNetworkerrhemecolor:"+mNetworkerrhemecolor+"     mNullThemecolor:"+mNullThemecolor);
 
         //状态
-        if(typedArray.hasValue(R.styleable.netWorkComponentStyleable_state)) {
+        if(typedArray.hasValue(R.styleable.CommonNetworkStateLayout_state)) {
             //默认值为加载成功
-            mState = State.fromValue(typedArray.getInt(R.styleable.netWorkComponentStyleable_state, State.SUCCEED.getValue()));
+            mState = State.fromValue(typedArray.getInt(R.styleable.CommonNetworkStateLayout_state, State.SUCCEED.getValue()));
             Log.i(TAG,"mState:"+mState);
         }
 
-        if(typedArray.hasValue(R.styleable.netWorkComponentStyleable_emptyText)) {
-            mEmptyText = typedArray.getString(R.styleable.netWorkComponentStyleable_emptyText);
+        if(typedArray.hasValue(R.styleable.CommonNetworkStateLayout_emptyText)) {
+            mEmptyText = typedArray.getString(R.styleable.CommonNetworkStateLayout_emptyText);
             Log.i(TAG,"mEmptyText:"+mEmptyText);
         }
 
-        if(typedArray.hasValue(R.styleable.netWorkComponentStyleable_networkErrText)) {
-            mNetworkErrText = typedArray.getString(R.styleable.netWorkComponentStyleable_networkErrText);
+        if(typedArray.hasValue(R.styleable.CommonNetworkStateLayout_networkErrText)) {
+            mNetworkErrText = typedArray.getString(R.styleable.CommonNetworkStateLayout_networkErrText);
             Log.i(TAG,"mNetworkErrText:"+mNetworkErrText);
         }
 
+        if(typedArray.hasValue(R.styleable.CommonNetworkStateLayout_connectErrText)) {
+            mConnectErrText = typedArray.getString(R.styleable.CommonNetworkStateLayout_connectErrText);
+            Log.i(TAG,"mConnectErrText:"+mConnectErrText);
+        }
 
-        if(typedArray.hasValue(R.styleable.netWorkComponentStyleable_loadingDrawable)){
-            mLoadingDrawableId = typedArray.getResourceId(R.styleable.netWorkComponentStyleable_loadingDrawable, -1);
+        if(typedArray.hasValue(R.styleable.CommonNetworkStateLayout_connectErrDrawable)){
+            mConnectErrDrawableId = typedArray.getResourceId(R.styleable.CommonNetworkStateLayout_connectErrDrawable, -1);
+            Log.i(TAG,"mConnectErrDrawableId:"+mConnectErrDrawableId);
+        }
+
+        if(typedArray.hasValue(R.styleable.CommonNetworkStateLayout_loadingDrawable)){
+            mLoadingDrawableId = typedArray.getResourceId(R.styleable.CommonNetworkStateLayout_loadingDrawable, -1);
             Log.i(TAG,"mLoadingLayoutId:"+mLoadingDrawableId);
         }
 
-        if(typedArray.hasValue(R.styleable.netWorkComponentStyleable_loadingText)) {
-            mLoadingText = typedArray.getString(R.styleable.netWorkComponentStyleable_loadingText);
+        if(typedArray.hasValue(R.styleable.CommonNetworkStateLayout_loadingText)) {
+            mLoadingText = typedArray.getString(R.styleable.CommonNetworkStateLayout_loadingText);
             Log.i(TAG,"mLoadingText:"+mLoadingText);
         }
 
@@ -143,6 +162,15 @@ public class NetworkComponent extends FrameLayout {
         setState(State.NETWORKERR,networkErrText);
     }
 
+//    //显示有网连接失败的页面
+//    public void showConnectErrLayout(){
+//        Log.d(TAG,"showConnectErrLayout");
+//        setState(State.CONNECTERR,null);
+//    }
+//    public void showConnectErrLayout(String connectErrText){
+//        Log.d(TAG,"showConnectErrLayout");
+//        setState(State.CONNECTERR,connectErrText);
+//    }
 
     //显示空的页面
     public void showEmptyLayout(){
@@ -154,8 +182,19 @@ public class NetworkComponent extends FrameLayout {
         setState(State.EMPTY,emptyText);
     }
 
+    //点击重试的回调
+    private RetryClickListener mRetryClickListener;
+
+    public interface RetryClickListener extends OnClickListener {
+    }
+
+    public void setRetryOnclickListener(RetryClickListener listener) {
+        mRetryClickListener = listener;
+    }
+
     //-----------------------------------------------------------------
 
+    private ViewStub mConnectErrVs;
     private ViewStub mLoadingVs;
     private ViewStub mNetworkErrVs;
     private ViewStub mEmptyVs;
@@ -179,7 +218,8 @@ public class NetworkComponent extends FrameLayout {
 
         if(mEmptyCustomLayout!=null)
             addView(mEmptyCustomLayout);
-
+        if(mConnectErrCustomLayout!=null)
+            addView(mConnectErrCustomLayout);
 
         setState(mState,null);
     }
@@ -202,26 +242,36 @@ public class NetworkComponent extends FrameLayout {
             if(mLoadingRl!=null)
                 mLoadingRl.setVisibility(state== State.LOADING? View.VISIBLE: View.GONE);
             else{
-                if(state!= State.LOADING)
-                    return;
+                if(state== State.LOADING)
                 initLoadingRl(text);
             }
         }
 
-        //网络连接失败的页面
+        //没有网络的页面
         if(mNetworkErrCustomLayout!=null){
             mNetworkErrCustomLayout.setVisibility(state== State.NETWORKERR? View.VISIBLE: View.GONE);
         }else{
             if(mNetWorkErrTv!=null)
                 mNetWorkErrTv.setVisibility(state== State.NETWORKERR? View.VISIBLE: View.GONE);
             else{
-                if(state!= State.NETWORKERR)
-                    return;
+                if(state== State.NETWORKERR)
                 initNetWorkErrTv(text);
             }
 
         }
 
+//        //网络连接失败页面
+//        if(mConnectErrCustomLayout!=null){
+//            mConnectErrCustomLayout.setVisibility(state== State.CONNECTERR? View.VISIBLE: View.GONE);
+//        }else{
+//            if(mConnectErrRl!=null)
+//                mConnectErrRl.setVisibility(state== State.CONNECTERR? View.VISIBLE: View.GONE);
+//            else{
+//                if(state== State.CONNECTERR)
+//                initConnectErrRl(text);
+//            }
+//
+//        }
         //空页面
         if(mEmptyCustomLayout!=null){
             mEmptyCustomLayout.setVisibility(state== State.EMPTY? View.VISIBLE: View.GONE);
@@ -229,8 +279,7 @@ public class NetworkComponent extends FrameLayout {
             if(mEmptyTv!=null)
                 mEmptyTv.setVisibility(state== State.EMPTY? View.VISIBLE: View.GONE);
             else{
-                if(state!= State.EMPTY)
-                    return;
+                if(state== State.EMPTY)
                 initEmptyTv(text);
             }
         }
@@ -254,9 +303,42 @@ public class NetworkComponent extends FrameLayout {
         if(emptyText!=null)
             mEmptyTv.setText(emptyText);
 
+
     }
 
 
+    /*
+    *初始化自己的网络连接失败的页面
+    *@author luhaisheng
+    *@time 2016/6/4 10:45
+    */
+//    private void initConnectErrRl(String connectErrText) {
+//        mConnectErrVs = (ViewStub)mRoot.findViewById(R.id.vb_connect_err);
+//        mConnectErrRl = (RelativeLayout) mConnectErrVs.inflate();
+//        //设置用户自定义的网络连接失败的文本
+//        if(mConnectErrText!=null){
+//            TextView connectErrTv= (TextView) mConnectErrRl.findViewById(R.id.tv_connect_err);
+//            connectErrTv.setText(mConnectErrText);
+//        }
+//        //设置用户自定义的网络连接失败的图片
+//        if(mConnectErrDrawableId!=-1){
+//            ImageView connectErrIv= (ImageView) mConnectErrRl.findViewById(R.id.iv_connect);
+//            connectErrIv.setImageResource(mConnectErrDrawableId);
+//        }
+//        //设置用户自定义的网络连接失败的背景色
+//        if(mConnecterrThemecolor!=-1){
+//            mConnectErrRl.setBackgroundColor(mConnecterrThemecolor);
+//        }
+//        //设置点击重试的回调接口
+//        if (mRetryClickListener != null) {
+//            mConnectErrRl.findViewById(R.id.btn_retry).setOnClickListener(mRetryClickListener);
+//        }
+//        if(connectErrText!=null){
+//            TextView connectErrTv= (TextView) mConnectErrRl.findViewById(R.id.tv_connect_err);
+//            connectErrTv.setText(connectErrText);
+//        }
+//
+//    }
 
 
     /*
@@ -329,7 +411,7 @@ public class NetworkComponent extends FrameLayout {
     *@time 2016/6/3 22:57
     */
     public enum State {
-    SUCCEED(0), LOADING(1), NETWORKERR(2),EMPTY(3);
+    SUCCEED(0), LOADING(1), NETWORKERR(2), EMPTY(3);
         int mValue;
         static State fromValue(int value) {
             State[] values = State.values();

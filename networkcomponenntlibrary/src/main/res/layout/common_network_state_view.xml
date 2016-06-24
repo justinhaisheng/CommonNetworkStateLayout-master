@@ -9,16 +9,22 @@
         android:id="@+id/vb_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout="@layout/common_loading_view"
+        android:layout="@layout/common_loading_view_large"
         />
 
     <ViewStub
         android:id="@+id/vb_network_err"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout="@layout/common_network_err_view"
+        android:layout="@layout/common_network_err_view_large"
         />
 
+    <!--<ViewStub-->
+        <!--android:id="@+id/vb_connect_err"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout="@layout/common_connect_err_view_large"-->
+        <!--/>-->
 
     <ViewStub
         android:id="@+id/vb_empty"
@@ -27,4 +33,11 @@
         android:layout="@layout/common_empty"
         />
 
+<!--    <ViewStub
+        android:id="@+id/vb_succeed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/common_succeed_large"
+        android:inflatedId="@+id/vb_succeed"
+        />-->
 </FrameLayout>
